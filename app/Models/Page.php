@@ -34,10 +34,12 @@ class Page extends Model
     // protected $dates = [];
 
     protected $casts = [
-      'seo' => 'array'
+      'seo' => 'array',
+      'extras' => 'array',
+      'fields' => 'array'
     ];
 
-    protected $fakeColumns = ['seo'];
+    protected $fakeColumns = ['seo', 'extras'];
     
     /*
     |--------------------------------------------------------------------------

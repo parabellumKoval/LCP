@@ -91,12 +91,23 @@ class PageCrudController extends CrudController
     {
       $this->crud->setValidation(PageRequest::class);
 
+      // IN INDEX
+      $this->crud->addField([
+        'name' => 'in_index',
+        'label' => 'Страница индексируется?',
+        'type' => 'boolean',
+        'default' => '1',
+        'hint' => 'Уберите галочку если хотите скрыть страницу из индекса',
+        'tab' => 'Основное'
+      ]);
+
       // IS ACTIVE
       $this->crud->addField([
         'name' => 'is_active',
         'label' => 'Активен',
         'type' => 'boolean',
         'default' => '1',
+        'hint' => 'Уберите галочку если хотите скрыть страницу',
         'tab' => 'Основное'
       ]);
 
@@ -106,6 +117,18 @@ class PageCrudController extends CrudController
         'label' => 'Главная страница',
         'type' => 'boolean',
         'default' => '0',
+        'hint' => 'Может быть установлена только одна главная страница для лендинга.',
+        'tab' => 'Основное'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'breadcrumbs',
+        'label' => "Хлебные крошки", 
+        'type' => 'checkbox',
+        'default' => 1,
+        'fake' => true, 
+        'store_in' => 'extras',
+        'hint' => 'Показать хлебные крошки на это странице (не влияет на микроразметки breadcrumbs, которая будет выводиться в любом случае)?',
         'tab' => 'Основное'
       ]);
 
@@ -119,6 +142,7 @@ class PageCrudController extends CrudController
         'entity' => 'landing',
         'multiple' => false,
         'placeholder' => "Выберите дендинг",
+        'hint' => 'Выберите из списка лендинг к которому относится данная страница.',
         'tab' => 'Основное'
       ]);
 
@@ -138,18 +162,43 @@ class PageCrudController extends CrudController
       ]);
 
 
-      // HTML
+      // CONTENT
+      $this->crud->addField([
+        'name' => 'fields',
+        'label' => "Шорткоды", 
+        'type' => 'repeatable',
+        'fields' => [
+          [
+            'name'  => 'shortcode',
+            'type'  => 'text',
+            'label' => 'Shortcode',
+            'hint' => 'Ключ шорткода, без паттерна {{-- --}}'
+          ],
+          [
+            'name'  => 'value',
+            'type'  => 'ckeditor',
+            'label' => 'Значение',
+            'attributes' => [
+              'rows' => 10
+            ],
+          ],
+        ],
+        'new_item_label'  => 'Добавить шорткод',
+        'init_rows' => 0,
+        'min_rows' => 0,
+        'tab' => 'Контент'
+      ]);
+
       $this->crud->addField([
         'name' => 'content',
-        'label' => 'Контент',
-        'type' => 'textarea',
-        'attributes' => [
-          'rows' => 10
-        ],
+        'label' => 'Html шаблон',
+        'type' => 'ace',
+        'hint' => 'Для замены части контента на значение шорткода необходимо исспользовать такой паттерн <code>{{-- shortcode --}}</code>',
         'tab' => 'Контент'
       ]);
 
       // SEO
+
       $this->crud->addField([
         'name' => 'meta_title',
         'label' => "Meta Title", 
@@ -162,6 +211,15 @@ class PageCrudController extends CrudController
       $this->crud->addField([
           'name' => 'meta_description',
           'label' => "Meta Description", 
+          'type' => 'textarea',
+          'fake' => true, 
+          'store_in' => 'seo',
+          'tab' => 'SEO'
+      ]);
+
+      $this->crud->addField([
+          'name' => 'meta_keywords',
+          'label' => "Meta Keywords", 
           'type' => 'textarea',
           'fake' => true, 
           'store_in' => 'seo',

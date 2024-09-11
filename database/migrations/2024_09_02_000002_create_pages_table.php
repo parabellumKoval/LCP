@@ -18,6 +18,7 @@ class CreatePagesTable extends Migration
             $table->foreignId('landing_id')->nullable()->default(null);
             $table->string('name');
             $table->string('slug');
+            $table->boolean('in_index')->default(1);
             $table->boolean('is_active')->default(1);
             $table->boolean('is_home')->default(0);
             $table->json('seo')->nullable();

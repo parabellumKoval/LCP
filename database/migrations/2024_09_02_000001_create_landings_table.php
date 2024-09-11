@@ -25,6 +25,7 @@ class CreateLandingsTable extends Migration
             $table->json('head_stack')->nullable();
             $table->longText('header_html')->nullable();
             $table->longText('footer_html')->nullable();
+            $table->text('robots_txt')->nullable();
             $table->timestamps();
         });
     }

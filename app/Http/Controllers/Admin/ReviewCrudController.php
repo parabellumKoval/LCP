@@ -120,6 +120,19 @@ class ReviewCrudController extends CrudController
         'placeholder' => "Выберите дендинг"
       ]);
 
+
+       // IS ACTIVE
+      $this->crud->addField([
+        'name' => 'parent_id',
+        'label' => 'Родительский комментарий',
+        'type' => 'relationship',
+        'model'     => 'App\Models\Review',
+        'attribute' => 'uniqNameAdmin',
+        'entity' => 'parent',
+        'multiple' => false,
+        'placeholder' => "Выберите комментарий"
+      ]);
+
       $this->crud->addField([
         'name' => 'author',
         'label' => 'Имя автора',
@@ -152,6 +165,14 @@ class ReviewCrudController extends CrudController
             'min' => 1,
             'max' => 5,
         ],
+      ]);
+
+
+      $this->crud->addField([
+        'name' => 'likes',
+        'label' => 'Лайки',
+        'type' => 'number',
+        'default' => 0
       ]);
     }
 

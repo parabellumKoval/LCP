@@ -16,6 +16,7 @@ class CreateReviewsTable extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('landing_id')->nullable()->default(null);
+            $table->foreignId('parent_id')->nullable();
             $table->boolean('is_moderated')->default(0);
             $table->text('text');
             $table->string('photo')->nullable();
@@ -23,6 +24,7 @@ class CreateReviewsTable extends Migration
             $table->timestamp('published_at')->nullable();
             $table->json('extras')->nullable();
             $table->integer('rating')->nullable();
+            $table->integer('likes')->default(0);
             $table->timestamps();
         });
     }

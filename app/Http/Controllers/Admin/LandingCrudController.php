@@ -81,6 +81,17 @@ class LandingCrudController extends CrudController
         'tab' => 'Основное'
       ]);
 
+      // DISK
+      $this->crud->addField([
+        'name' => 'disk',
+        'label' => 'Путь к диску',
+        'hint' => 'Укажите абсолютный путь к диску на сервере (для хостинга файлов). Например: <code>absolute/path/to/landing_root/public/disk_name</code>',
+        'type' => 'text',
+        'fake' => true,
+        'store_in' => 'extras',
+        'tab' => 'Основное'
+      ]);
+
       // HTML
       $this->crud->addField([
         'name' => 'head_stack',
@@ -107,7 +118,7 @@ class LandingCrudController extends CrudController
       $this->crud->addField([
         'name' => 'header_html',
         'label' => 'HTML шапки',
-        'type' => 'textarea',
+        'type' => 'ace',
         'attributes' => [
           'rows' => 10
         ],
@@ -117,34 +128,39 @@ class LandingCrudController extends CrudController
       $this->crud->addField([
         'name' => 'footer_html',
         'label' => 'HTML подвала',
-        'type' => 'textarea',
+        'type' => 'ace',
         'attributes' => [
           'rows' => 10
         ],
         'tab' => 'HTML'
       ]);
 
-      $this->crud->addField([
-        'name' => 'cssLink',
-        'label' => 'CSS-файл',
-        'type' => 'upload',
-        'upload'    => true,
-        'disk' => 'cdn',
-        'hint' => 'Файлу будет присвоено название по-умолчанию styles.css',
-        'tab' => 'HTML'
-      ]);
-
-      $this->crud->addField([
-        'name' => 'jsLink',
-        'label' => 'JS-файл',
-        'type' => 'upload',
-        'upload'    => true,
-        'disk' => 'cdn',
-        'hint' => 'Файлу будет присвоено название по-умолчанию scripts.js',
-        'tab' => 'HTML'
-      ]);
-
       // SEO
+
+      $this->crud->addField([
+        'name' => 'head_tags',
+        'label' => "Теги в head", 
+        'type' => 'repeatable',
+        'fields' => [
+          [
+            'name'  => 'tag_name',
+            'type'  => 'text',
+            'label' => 'Название (для администраторов)',
+          ],
+          [
+            'name'  => 'tag',
+            'type'  => 'textarea',
+            'label' => 'Тег',
+          ],
+        ],
+        'new_item_label'  => 'Добавить тег',
+        'fake' => true,
+        'store_in' => 'seo',
+        'init_rows' => 0,
+        'min_rows' => 0,
+        'tab' => 'SEO'
+      ]);
+
       $this->crud->addField([
         'name' => 'meta_title',
         'label' => "Meta Title", 
@@ -163,6 +179,47 @@ class LandingCrudController extends CrudController
           'tab' => 'SEO'
       ]);
 
+      $this->crud->addField([
+          'name' => 'meta_keywords',
+          'label' => "Meta Keywords", 
+          'type' => 'textarea',
+          'fake' => true, 
+          'store_in' => 'seo',
+          'tab' => 'SEO'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'robots_txt',
+        'label' => "robots.txt", 
+        'type' => 'textarea',
+        'attributes' => [
+          'rows' => 10
+        ],
+        'tab' => 'SEO'
+      ]);
+
+
+      $this->crud->addField([
+        'name' => 'timeout',
+        'label' => "Таймер", 
+        'type' => 'number',
+        'attributes' => ["step" => 1],
+        'suffix' => 'сек.',
+        'fake' => true, 
+        'store_in' => 'extras',
+        'hint' => 'Время по истечению которого будет проихведен переход на страницу укзанную ниже.',
+        'tab' => 'Редирект'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'redirect_link',
+        'label' => "Редирект на url", 
+        'type' => 'text',
+        'fake' => true, 
+        'store_in' => 'extras',
+        'hint' => 'Url страницы на которую будет произведен переход.',
+        'tab' => 'Редирект'
+      ]);
     }
 
     protected function setupUpdateOperation()

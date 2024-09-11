@@ -4,6 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Models\Landing;
+use App\Observers\LandingObserver;
+
+use App\Models\Page;
+use App\Observers\PageObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-      //
+      Landing::observe(LandingObserver::class);
+      Page::observe(PageObserver::class);
     }
 }

@@ -32,16 +32,17 @@ class Landing extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'key', 'is_active', 'seo', 'cssLink', 'jsLink', 'head_stack', 'header_html', 'footer_html'];
+    protected $fillable = ['name', 'key', 'is_active', 'seo', 'cssLink', 'jsLink', 'head_stack', 'header_html', 'footer_html', 'robots_txt', 'disk', 'extras'];
     // protected $hidden = [];
     // protected $dates = [];
 
     protected $casts = [
       'seo' => 'array',
+      'extras' => 'array',
       'head_stack' => 'array'
     ];
 
-    protected $fakeColumns = ['seo'];
+    protected $fakeColumns = ['seo', 'extras'];
     
     /*
     |--------------------------------------------------------------------------
@@ -133,7 +134,7 @@ class Landing extends Model
     public function getPublicCssLinkAttribute() {
       $path = $this->key . '/styles.css';
 
-      if(Storage::disk('cdn')->exists($path)) {
+      if(Storage::disk($this->key)->exists($path)) {
         return url('cdn/' . $path);
       }else {
         return null;
@@ -143,7 +144,7 @@ class Landing extends Model
     public function getPublicJsLinkAttribute() {
       $path = $this->key . '/scripts.js';
 
-      if(Storage::disk('cdn')->exists($path)) {
+      if(Storage::disk($this->key)->exists($path)) {
         return url('cdn/' . $path);
       }else {
         return null;
@@ -162,11 +163,11 @@ class Landing extends Model
       $destination_path = $this->key;
 
       if(empty($value)) {
-        Storage::disk('cdn')->delete($destination_path . '/' . $file_name);
+        Storage::disk($this->key)->delete($destination_path . '/' . $file_name);
         return;
       }
 
-      Storage::disk('cdn')->putFileAs($destination_path, $value, $file_name);
+      Storage::disk($this->key)->putFileAs($destination_path, $value, $file_name);
       $this->attributes['css_link'] = $file_name;
     }
 
@@ -177,14 +178,14 @@ class Landing extends Model
       $destination_path = $this->key;
 
       if(empty($value)) {
-        Storage::disk('cdn')->delete($destination_path . '/' . $file_name);
+        Storage::disk($this->key)->delete($destination_path . '/' . $file_name);
         return;
       }
 
       // $file_name = $value->getClientOriginalName();
       $destination_path = $this->key;
 
-      Storage::disk('cdn')->putFileAs($destination_path, $value, $file_name);
+      Storage::disk($this->key)->putFileAs($destination_path, $value, $file_name);
       $this->attributes['js_link'] = $file_name;
     }
 }

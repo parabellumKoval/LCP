@@ -35,13 +35,6 @@ return [
             'root' => storage_path('app'),
         ],
 
-        'cdn' => [
-          'driver' => 'local',
-          'root' => public_path('cdn'),
-          'url' => env('APP_URL').'/cdn',
-          'visibility' => 'public',
-        ],
-
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
