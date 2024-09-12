@@ -23,6 +23,7 @@ class CreatePagesTable extends Migration
             $table->boolean('is_home')->default(0);
             $table->json('seo')->nullable();
             $table->longText('content')->nullable();
+            $table->json('fields')->nullable();
             $table->json('extras')->nullable();
             $table->timestamps();
         });
