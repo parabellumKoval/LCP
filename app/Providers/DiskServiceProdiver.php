@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 use App\Models\Landing;
 
 class DiskServiceProdiver extends ServiceProvider
@@ -24,6 +25,10 @@ class DiskServiceProdiver extends ServiceProvider
      */
     public function boot()
     {
+      if(Schema::hasTable('landings') === false){
+        return;
+      }
+
       $landings = Landing::all();
       $disks = [];
 
