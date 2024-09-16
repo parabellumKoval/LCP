@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 // MODEL
 use App\Models\Landing;
+use App\Models\Page;
 
 class Review extends Model
 {
@@ -64,7 +65,22 @@ class Review extends Model
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
-    */
+    */    
+    /**
+     * page
+     *
+     * @return void
+     */
+    public function page()
+    {
+      return $this->belongsTo(Page::class);
+    }
+    
+    /**
+     * landing
+     *
+     * @return void
+     */
     public function landing()
     {
       return $this->belongsTo(Landing::class);
@@ -111,7 +127,7 @@ class Review extends Model
     */
 
     public function getUniqNameAdminAttribute() {
-      return $this->id . ' | ' . $this->author  . ' | ' . mb_substr($this->text, 0, 50) . '...';
+      return $this->landing->name . ' | ' . $this->id . ' | ' . $this->author  . ' | ' . mb_substr($this->text, 0, 50) . '...';
     }
     
     /*

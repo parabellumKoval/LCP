@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 use App\Models\Review;
 use App\Models\Landing;
+use App\Models\Page;
 
 /**
  * Class SupplierCrudController
@@ -24,6 +25,8 @@ class ReviewCrudController extends CrudController
 
 
     private $filter_landings = [];
+    private $landings_list = [];
+    private $entry = null;
 
     public function setup()
     {
@@ -31,7 +34,11 @@ class ReviewCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/review');
         $this->crud->setEntityNameStrings('отзыв', 'отзывы');
 
+        // CURRENT MODEL
+        $this->setEntry();
+
         $this->filter_landings = Landing::pluck('name', 'id')->toArray();
+        $this->pages_list = Page::where('landing_id', $this->getLandingId())->pluck('name', 'id')->toArray();
     }
 
     protected function setupListOperation()
@@ -100,6 +107,54 @@ class ReviewCrudController extends CrudController
     {
       $this->crud->setValidation(ReviewRequest::class);
 
+      $js_attributes = [
+        'data-value' => '',
+        'onfocus' => "this.setAttribute('data-value', this.value);",
+        'onchange' => "
+            const value = event.target.value
+            let isConfirmed = confirm('Несохраненные данные будут сброшены. Все равно продолжить?');
+            
+            if(isConfirmed) {
+              reload_page(event);
+            } else{
+              this.value = this.getAttribute('data-value');
+            }
+
+            function reload_page(event) {
+              const value = event.target.value
+              url = insertParam('landing_id', value)
+            };
+
+            function insertParam(key, value) {
+              key = encodeURIComponent(key);
+              value = encodeURIComponent(value);
+          
+              // kvp looks like ['key1=value1', 'key2=value2', ...]
+              var kvp = document.location.search.substr(1).split('&');
+              let i=0;
+          
+              for(; i<kvp.length; i++){
+                  if (kvp[i].startsWith(key + '=')) {
+                      let pair = kvp[i].split('=');
+                      pair[1] = value;
+                      kvp[i] = pair.join('=');
+                      break;
+                  }
+              }
+          
+              if(i >= kvp.length){
+                  kvp[kvp.length] = [key,value].join('=');
+              }
+          
+              // can return this or...
+              let params = kvp.join('&');
+          
+              // reload page with new params
+              document.location.search = params;
+          }
+          "
+      ];
+
        // IS ACTIVE
        $this->crud->addField([
         'name' => 'is_moderated',
@@ -110,18 +165,40 @@ class ReviewCrudController extends CrudController
 
       // HTML
       $this->crud->addField([
-        'name' => 'landing',
+        'name' => 'landing_id',
         'label' => 'Лендинг',
-        'type' => 'relationship',
-        'model'     => 'App\Models\Landing',
-        'attribute' => 'name',
-        'entity' => 'landing',
-        'multiple' => false,
-        'placeholder' => "Выберите дендинг"
+        'type' => 'select_from_array',
+        'options' => $this->filter_landings,
+        'default' => null,
+        'value' => $this->getLandingId(),
+        'attributes' => $js_attributes,
+        'placeholder' => "Выберите лендинг"
       ]);
 
+      // PAGE
+      $this->crud->addField([
+        'name' => 'page_id',
+        'label' => 'Страница',
+        'type' => 'select_from_array',
+        'options' => $this->pages_list,
+        'allows_null' => false,
+        // 'value' => $this->getLandingId(),
+        // 'attributes' => $js_attributes,
+        'placeholder' => "Выберите страницу"
+      ]);
 
-       // IS ACTIVE
+    //   $this->crud->addField([
+    //    'name' => 'page_id',
+    //    'label' => 'Страница',
+    //    'type' => 'relationship',
+    //    'model'     => 'App\Models\Page',
+    //    'attribute' => 'uniqNameAdmin',
+    //    'entity' => 'page',
+    //    'multiple' => false,
+    //    'placeholder' => "Выберите страницу"
+    //  ]);
+
+       // PARENT
       $this->crud->addField([
         'name' => 'parent_id',
         'label' => 'Родительский комментарий',
@@ -132,6 +209,8 @@ class ReviewCrudController extends CrudController
         'multiple' => false,
         'placeholder' => "Выберите комментарий"
       ]);
+
+
 
       $this->crud->addField([
         'name' => 'author',
@@ -179,5 +258,26 @@ class ReviewCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+
+    private function setEntry() {
+      if($this->crud->getCurrentOperation() === 'update')
+        $this->entry = $this->crud->getEntry(\Route::current()->parameter('id'));
+      else
+        $this->entry = null;
+    }
+
+    private function getLandingId() {
+      $landing_id = \Request::get('landing_id');
+
+      if(\Request::has('landing_id')){
+        return $landing_id? $landing_id: 'null';
+      } elseif($this->entry && $this->entry->landing_id){
+        return $this->entry->landing_id;
+      } else {
+        return 'null';
+      }
+
     }
 }

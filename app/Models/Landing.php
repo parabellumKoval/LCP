@@ -32,17 +32,18 @@ class Landing extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'key', 'is_active', 'seo', 'cssLink', 'jsLink', 'head_stack', 'header_html', 'footer_html', 'robots_txt', 'disk', 'extras'];
+    protected $fillable = ['name', 'key', 'is_active', 'seo', 'cssLink', 'jsLink', 'head_stack', 'header_html', 'footer_html', 'closed_html', 'robots_txt', 'disk', 'extras', 'fields'];
     // protected $hidden = [];
     // protected $dates = [];
 
     protected $casts = [
       'seo' => 'array',
       'extras' => 'array',
-      'head_stack' => 'array'
+      'head_stack' => 'array',
+      'fields' => 'array'
     ];
 
-    protected $fakeColumns = ['seo', 'extras'];
+    protected $fakeColumns = ['seo', 'extras', 'fields'];
     
     /*
     |--------------------------------------------------------------------------

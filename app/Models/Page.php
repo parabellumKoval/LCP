@@ -114,6 +114,15 @@ class Page extends Model
         }
         return $this->name;
     }
+    
+    /**
+     * getUniqNameAdminAttribute
+     *
+     * @return void
+     */
+    public function getUniqNameAdminAttribute() {
+      return $this->name . ' (' . $this->landing->name . ')';
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

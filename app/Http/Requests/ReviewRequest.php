@@ -26,6 +26,8 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
+          'landing_id' => 'required',
+          'page_id' => 'required',
           'text' => 'required|min:1',
           'author' => 'required|min:1'
         ];

@@ -121,6 +121,15 @@ class PageCrudController extends CrudController
         'tab' => 'Основное'
       ]);
 
+      // IS REVIEWS
+      $this->crud->addField([
+        'name' => 'is_reviews',
+        'label' => 'Включить отзывы?',
+        'type' => 'boolean',
+        'default' => '0',
+        'tab' => 'Основное'
+      ]);
+
       $this->crud->addField([
         'name' => 'breadcrumbs',
         'label' => "Хлебные крошки", 
@@ -172,7 +181,12 @@ class PageCrudController extends CrudController
             'name'  => 'shortcode',
             'type'  => 'text',
             'label' => 'Shortcode',
-            'hint' => 'Ключ шорткода, без паттерна {{-- --}}'
+            'hint' => 'Ключ шорткода, без паттерна {{-- --}}',
+          ],
+          [
+            'name'  => 'is_clear_tags',
+            'type'  => 'checkbox',
+            'label' => 'Очищать html-теги?',
           ],
           [
             'name'  => 'value',
@@ -198,6 +212,27 @@ class PageCrudController extends CrudController
       ]);
 
       // SEO
+      $this->crud->addField([
+        'name' => 'head_stack',
+        'label' => "Теги в head", 
+        'type' => 'repeatable',
+        'fields' => [
+          [
+            'name'  => 'tag_name',
+            'type'  => 'text',
+            'label' => 'Название (для администраторов)',
+          ],
+          [
+            'name'  => 'tag',
+            'type'  => 'textarea',
+            'label' => 'Тег',
+          ],
+        ],
+        'new_item_label'  => 'Добавить тег',
+        'init_rows' => 0,
+        'min_rows' => 0,
+        'tab' => 'SEO'
+      ]);
 
       $this->crud->addField([
         'name' => 'meta_title',

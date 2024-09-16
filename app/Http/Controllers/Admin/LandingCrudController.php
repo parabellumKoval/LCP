@@ -92,6 +92,95 @@ class LandingCrudController extends CrudController
         'tab' => 'Основное'
       ]);
 
+      //
+      $this->crud->addField([
+        'name' => 'footer',
+        'label' => "Шорткоды", 
+        'type' => 'repeatable',
+        'fields' => [
+          [
+            'name'  => 'shortcode',
+            'type'  => 'text',
+            'label' => 'Shortcode',
+            'hint' => 'Ключ шорткода, без паттерна {{-- --}}',
+          ],
+          [
+            'name'  => 'is_clear_tags',
+            'type'  => 'checkbox',
+            'label' => 'Очищать html-теги?',
+          ],
+          [
+            'name'  => 'value',
+            'type'  => 'ckeditor',
+            'label' => 'Значение',
+            'attributes' => [
+              'rows' => 10
+            ],
+          ],
+        ],
+        'new_item_label'  => 'Добавить шорткод',
+        'init_rows' => 0,
+        'min_rows' => 0,
+        'fake' => true,
+        'store_in' => 'fields',
+        'tab' => 'Подвал'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'footer_html',
+        'label' => 'HTML подвала',
+        'type' => 'ace',
+        'attributes' => [
+          'rows' => 10
+        ],
+        'tab' => 'Подвал'
+      ]);
+
+      //
+      $this->crud->addField([
+        'name' => 'header',
+        'label' => "Шорткоды", 
+        'type' => 'repeatable',
+        'fields' => [
+          [
+            'name'  => 'shortcode',
+            'type'  => 'text',
+            'label' => 'Shortcode',
+            'hint' => 'Ключ шорткода, без паттерна {{-- --}}',
+          ],
+          [
+            'name'  => 'is_clear_tags',
+            'type'  => 'checkbox',
+            'label' => 'Очищать html-теги?',
+          ],
+          [
+            'name'  => 'value',
+            'type'  => 'ckeditor',
+            'label' => 'Значение',
+            'attributes' => [
+              'rows' => 10
+            ],
+          ],
+        ],
+        'new_item_label'  => 'Добавить шорткод',
+        'init_rows' => 0,
+        'min_rows' => 0,
+        'fake' => true,
+        'store_in' => 'fields',
+        'tab' => 'Шапка'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'header_html',
+        'label' => 'HTML шапки',
+        'type' => 'ace',
+        'attributes' => [
+          'rows' => 10
+        ],
+        'tab' => 'Шапка'
+      ]);
+      
+
       // HTML
       $this->crud->addField([
         'name' => 'head_stack',
@@ -112,31 +201,10 @@ class LandingCrudController extends CrudController
         'new_item_label'  => 'Добавить тег',
         'init_rows' => 0,
         'min_rows' => 0,
-        'tab' => 'HTML'
-      ]);
-
-      $this->crud->addField([
-        'name' => 'header_html',
-        'label' => 'HTML шапки',
-        'type' => 'ace',
-        'attributes' => [
-          'rows' => 10
-        ],
-        'tab' => 'HTML'
-      ]);
-
-      $this->crud->addField([
-        'name' => 'footer_html',
-        'label' => 'HTML подвала',
-        'type' => 'ace',
-        'attributes' => [
-          'rows' => 10
-        ],
-        'tab' => 'HTML'
+        'tab' => 'Теги'
       ]);
 
       // SEO
-
       $this->crud->addField([
         'name' => 'head_tags',
         'label' => "Теги в head", 
@@ -200,6 +268,25 @@ class LandingCrudController extends CrudController
 
 
       $this->crud->addField([
+        'name' => 'locale',
+        'label' => "Язык сайта",
+        'fake' => true, 
+        'store_in' => 'seo',
+        'hint' => '<code>og:locale</code>, <code>html lang=""</code>',
+        'tab' => 'SEO'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'site_name',
+        'label' => "og:site_name",
+        'fake' => true, 
+        'store_in' => 'seo',
+        'tab' => 'SEO'
+      ]);
+
+
+
+      $this->crud->addField([
         'name' => 'timeout',
         'label' => "Таймер", 
         'type' => 'number',
@@ -219,6 +306,17 @@ class LandingCrudController extends CrudController
         'store_in' => 'extras',
         'hint' => 'Url страницы на которую будет произведен переход.',
         'tab' => 'Редирект'
+      ]);
+
+      // 
+      $this->crud->addField([
+        'name' => 'closed_html',
+        'label' => 'HTML страницы',
+        'type' => 'ace',
+        'attributes' => [
+          'rows' => 10
+        ],
+        'tab' => 'Заглушка'
       ]);
     }
 
