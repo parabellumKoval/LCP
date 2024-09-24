@@ -362,6 +362,22 @@ class LandingCrudController extends CrudController
       ]);
 
       $this->crud->addField([
+        'name' => 'review_block_more_show',
+        'label' => 'Кнопка "показать все отзывы"',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_block_more_hide',
+        'label' => 'Кнопка "спрятать отзывы"',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
         'name' => 'delimiter_2',
         'type' => 'custom_html',
         'value' => '<h4>Карточка отзыва</h4>',
@@ -399,7 +415,6 @@ class LandingCrudController extends CrudController
         'store_in' => 'strings',
         'tab' => 'Переводы'
       ]);
-
 
       $this->crud->addField([
         'name' => 'review_form_submit_btn',
