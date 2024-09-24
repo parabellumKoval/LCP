@@ -318,10 +318,111 @@ class LandingCrudController extends CrudController
         ],
         'tab' => 'Заглушка'
       ]);
+
+      $this->getLangFields();
     }
 
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+
+    private function getLangFields() {
+
+      $this->crud->addField([
+        'name' => 'delimiter_1',
+        'type' => 'custom_html',
+        'value' => '<h4>Блок с отзывами</h4>',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_block_title',
+        'label' => 'Заголовок',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_block_desc_1',
+        'label' => 'до "всего отзывов"',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_block_desc_2',
+        'label' => 'после "всего отзывов"',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'delimiter_2',
+        'type' => 'custom_html',
+        'value' => '<h4>Карточка отзыва</h4>',
+        'tab' => 'Переводы'
+      ]);
+      
+      $this->crud->addField([
+        'name' => 'review_like_btn',
+        'label' => 'Кнопка "понравилось"',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_reply_btn',
+        'label' => 'Кнопка "ответ на комментарий"',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      //
+      $this->crud->addField([
+        'name' => 'delimiter_3',
+        'type' => 'custom_html',
+        'value' => '<h4>Форма отзывов</h4>',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_form_title',
+        'label' => 'Заголовок',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+
+      $this->crud->addField([
+        'name' => 'review_form_submit_btn',
+        'label' => 'Кнопка "отправить отзыв"',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+      
+      $this->crud->addField([
+        'name' => 'review_form_confirm',
+        'label' => 'Вы не робот',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_form_name_palceholder',
+        'label' => 'Плейсхолдер поля "ваше имя',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
     }
 }

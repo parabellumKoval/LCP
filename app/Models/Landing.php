@@ -32,7 +32,7 @@ class Landing extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'key', 'is_active', 'seo', 'cssLink', 'jsLink', 'head_stack', 'header_html', 'footer_html', 'closed_html', 'robots_txt', 'disk', 'extras', 'fields'];
+    protected $fillable = ['name', 'key', 'is_active', 'seo', 'cssLink', 'jsLink', 'head_stack', 'header_html', 'footer_html', 'closed_html', 'robots_txt', 'disk', 'extras', 'fields', 'strings'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -40,10 +40,11 @@ class Landing extends Model
       'seo' => 'array',
       'extras' => 'array',
       'head_stack' => 'array',
-      'fields' => 'array'
+      'fields' => 'array',
+      'strings' => 'array'
     ];
 
-    protected $fakeColumns = ['seo', 'extras', 'fields'];
+    protected $fakeColumns = ['seo', 'extras', 'fields', 'strings'];
     
     /*
     |--------------------------------------------------------------------------
