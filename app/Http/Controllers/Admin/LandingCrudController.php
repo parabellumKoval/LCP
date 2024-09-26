@@ -378,6 +378,54 @@ class LandingCrudController extends CrudController
       ]);
 
       $this->crud->addField([
+        'name' => 'delimiter_12',
+        'type' => 'custom_html',
+        'value' => '<h4>Сортировка отзывов</h4>',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_sort_title',
+        'label' => 'Заголовок',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_sort_date_desc',
+        'label' => 'Сначала самые новые',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_sort_date_asc',
+        'label' => 'Сначала самые старые',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_sort_usefull_desc',
+        'label' => 'Сначала полезные',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_sort_usefull_asc',
+        'label' => 'Сначала бесполезные',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      // 
+      $this->crud->addField([
         'name' => 'delimiter_2',
         'type' => 'custom_html',
         'value' => '<h4>Карточка отзыва</h4>',
@@ -435,6 +483,40 @@ class LandingCrudController extends CrudController
       $this->crud->addField([
         'name' => 'review_form_name_palceholder',
         'label' => 'Плейсхолдер поля "ваше имя',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+
+      //
+      $this->crud->addField([
+        'name' => 'delimiter_4',
+        'type' => 'custom_html',
+        'value' => '<h4>Сообщения</h4>',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_form_error_title',
+        'label' => 'Ошибка отправки комментария',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_form_error_details',
+        'label' => 'Включить подробную информациию об ошибке?',
+        'type' => 'checkbox',
+        'fake' => true, 
+        'store_in' => 'strings',
+        'tab' => 'Переводы'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'review_form_success',
+        'label' => 'Спасибо за отзыв',
         'fake' => true, 
         'store_in' => 'strings',
         'tab' => 'Переводы'
