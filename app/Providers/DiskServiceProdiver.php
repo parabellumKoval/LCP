@@ -54,7 +54,7 @@ class DiskServiceProdiver extends ServiceProvider
             'visibility' => 'public',
           ];
 
-          $disks[] = $landing->key;
+          $disks[] = $landing->key . '-public';
         }
       });
 
