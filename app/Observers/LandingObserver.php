@@ -66,7 +66,7 @@ Disallow: {$url}\n";
             }
           }
 
-          Storage::disk("{$landing->key}-public")->put('robots.txt', $robots_content);
+          Storage::disk("{$landing->key}-public")->put('robots.txt', $robots_content, 'public');
         }
       }
     }
