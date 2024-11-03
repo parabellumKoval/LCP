@@ -85,6 +85,12 @@ class PageCrudController extends CrudController
         'label' => 'Лендинг',
         'type' => 'relationship'
       ]);
+
+      $this->crud->addColumn([
+        'name' => 'parent',
+        'label' => 'Альтернативная для',
+        'type' => 'relationship'
+      ]);
     }
 
     protected function setupCreateOperation()
@@ -150,7 +156,7 @@ class PageCrudController extends CrudController
         'attribute' => 'name',
         'entity' => 'landing',
         'multiple' => false,
-        'placeholder' => "Выберите дендинг",
+        'placeholder' => "Выберите лендинг",
         'hint' => 'Выберите из списка лендинг к которому относится данная страница.',
         'tab' => 'Основное'
       ]);
@@ -170,6 +176,20 @@ class PageCrudController extends CrudController
         'tab' => 'Основное'
       ]);
 
+
+      // Parent
+      $this->crud->addField([
+        'name' => 'parent',
+        'label' => 'Альтернативная языковая версия страницы',
+        'type' => 'relationship',
+        'model'     => 'App\Models\Page',
+        'attribute' => 'name',
+        'entity' => 'parent',
+        'multiple' => false,
+        'placeholder' => "Выберите страницу",
+        'hint' => 'Выберите из списка страницу альтернативной языковой версией которой является данная страница',
+        'tab' => 'Основное'
+      ]);
 
       // CONTENT
       $this->crud->addField([
@@ -259,6 +279,15 @@ class PageCrudController extends CrudController
           'fake' => true, 
           'store_in' => 'seo',
           'tab' => 'SEO'
+      ]);
+
+      $this->crud->addField([
+        'name' => 'locale',
+        'label' => "Язык страницы",
+        'fake' => true, 
+        'store_in' => 'seo',
+        'hint' => '<code>og:locale</code>, <code>html lang=""</code>',
+        'tab' => 'SEO'
       ]);
     }
 

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Artisan;
 
 use App\Models\Page;
 
@@ -19,19 +20,23 @@ class PageObserver
     public function updated(Page $page)
     {
 
-      $landing = $page->landing;    
-      $robots_content = $landing->robots_txt;
-
-      foreach($landing->pages as $page) {
-        if($page->in_index === 0) {
-          $url = $page->is_home? '/': '/'.$page->slug;
-          $robots_content .= "
-Disallow: {$url}\n";
+      $landing = $page->landing;
+      
+      if(!empty($landing)) {
+        $robots_content = $landing->robots_txt;
+  
+        foreach($landing->pages as $page) {
+          if($page->in_index === 0) {
+            $url = $page->is_home? '/': '/'.$page->slug;
+            $robots_content .= "
+  Disallow: {$url}\n";
+          }
         }
-      }
+  
+        Storage::disk("{$landing->key}-public")->put('robots.txt', $robots_content);
+      }  
 
-      Storage::disk("{$landing->key}-public")->put('robots.txt', $robots_content);
-
+      // Artisan::call('optimize');
     }
 
 }
